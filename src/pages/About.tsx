@@ -13,7 +13,7 @@ export default function About() {
     <>
       <SEOHead
         title="About"
-        description={`Learn about ${photographerInfo.name}, ${photographerInfo.tagline}. ${photographerInfo.biography.split('\n\n')[0]}`}
+        description={`Learn about Croonjob, ${photographerInfo.tagline}. ${photographerInfo.biography.split('\n\n')[0]}`}
         image={photographerInfo.portraitImage}
       />
       
@@ -130,7 +130,7 @@ export default function About() {
               {/* Name and Tagline */}
               <div className="space-y-3">
                 <h2 className="text-4xl md:text-5xl font-light tracking-wide">
-                  {photographerInfo.name}
+                  Croonjob
                 </h2>
                 <p className="text-xl text-muted-foreground font-light tracking-wide">
                   {photographerInfo.tagline}

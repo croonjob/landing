@@ -1,41 +1,46 @@
 import type { PhotographerInfo } from '@/types';
 
 export const photographerInfo: PhotographerInfo = {
-  name: 'Sarah Mitchell',
-  tagline: 'Editorial & Commercial Photographer',
-  heroIntroduction: 'Creating visual narratives that capture authentic moments and timeless stories.',
-  biography: `Sarah Mitchell is an award-winning photographer specializing in editorial and commercial work, with recognition including the International Photography Awards Editorial Photographer of the Year 2023 and PDN Photo Annual Winner 2022. With over a decade of experience, her work has been featured in numerous international publications and exhibitions, collaborating with clients such as Vogue, The New York Times, National Geographic, Adobe, Apple, Nike, and Architectural Digest.
+  tagline: 'AI & LLM Business Automation Expert',
+  heroIntroduction: 'Automate your business with AI, LLM, and RAG. Profit & loss prediction, WhatsApp messaging automation, low-code/no-code solutions.',
+  biography: `CROONJOB is an AI-powered business automation consultant helping companies optimize operations with LLM and RAG (Retrieval-Augmented Generation) technologies.
 
-Based in New York with an MFA in Photography from the School of Visual Arts, Sarah brings a unique perspective to every project, combining technical excellence with artistic vision. Her approach to photography is deeply rooted in storytelling, believing that every image should convey emotion and meaning beyond its visual appeal.`,
-  approach: `My photography is guided by three principles: authenticity, composition, and light. I believe the best images emerge when subjects feel comfortable and genuine, when composition guides the viewer's eye naturally, and when light reveals the essence of the moment.
+With experience helping 200+ businesses across various scales, Alex specializes in:
+- **Profit & Loss Prediction** - Intelligent financial analysis for better decision-making
+- **WhatsApp Automation** - LLM-powered chatbots and auto-reply for 24/7 customer service
+- **Low-Code/No-Code Solutions** - Workflow automation without coding expertise
+- **Custom LLM & RAG Applications** - AI solutions tailored to your business needs
 
-Whether working on editorial assignments or commercial projects, I strive to create images that transcend their immediate purpose and become lasting visual statements.`,
+Every implementation is designed to deliver measurable ROI, reduce repetitive tasks, and empower your team to focus on more strategic work.`,
+  approach: `My automation philosophy centers on three things: efficiency, accuracy, and scalability. I believe the best AI solutions work silently in the background, handling repetitive tasks while empowering humans to focus on creative and strategic work.
+
+Whether implementing conversational AI, document automation, or custom LLM fine-tuning, I design systems that learn and improve over time — creating sustainable competitive advantages for my clients.`,
   awards: [
-    'International Photography Awards - Editorial Photographer of the Year 2023',
-    'PDN Photo Annual - Winner 2022',
-    'Hasselblad Masters Finalist 2021',
-    'Communication Arts Photography Annual 2020'
+    'AI Innovation Award - Best Enterprise Solution 2024',
+    'Forbes 30 Under 30 - Technology 2024',
+    'Google Cloud AI Partner of the Year 2023',
+    'AWS Machine Learning Hero 2022'
   ],
   clients: [
-    'Vogue',
-    'The New York Times',
-    'National Geographic',
-    'Adobe',
-    'Apple',
-    'Nike',
-    'Patagonia',
-    'Architectural Digest'
+    'E-Commerce Brands',
+    'Logistics Companies',
+    'Financial Services',
+    'Healthcare Providers',
+    'Retail Businesses',
+    'SaaS Companies',
+    'Manufacturing',
+    'Hospitality Industry'
   ],
-  education: 'MFA Photography, School of Visual Arts, New York',
-  location: 'New York, NY',
-  email: 'hello@sarahmitchell.com',
-  phone: '+1 (555) 123-4567',
-  availability: 'Currently booking for Q2 2025',
+  education: 'MS Computer Science, Stanford University',
+  location: 'San Francisco, CA',
+  email: 'hello@alexchen.ai',
+  phone: '+1 (555) 987-6543',
+  availability: 'Available for new projects - Q3 2025',
   socialLinks: {
-    instagram: 'https://instagram.com/sarahmitchellphoto',
-    linkedin: 'https://linkedin.com/in/sarahmitchell',
-    behance: 'https://behance.net/sarahmitchell'
+    instagram: 'https://instagram.com/alexchenai',
+    linkedin: 'https://linkedin.com/in/alexchenai',
+    behance: 'https://github.com/alexchenai'
   },
-  // Photo by Joshua Sun on Unsplash
+  // Photo by CROONJOB
   portraitImage: 'https://images.unsplash.com/photo-1585279968680-6606ee6ed134?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDA2OTF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjI3Njk1NjB8&ixlib=rb-4.1.0&q=80&w=1080'
 };

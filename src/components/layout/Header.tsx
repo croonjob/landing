@@ -1,33 +1,81 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Menu } from 'lucide-react';
-import { useState } from 'react';
+import { Menu, X, ChevronRight, ArrowRight } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
-import { ThemeToggle } from './ThemeToggle';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { photographerInfo } from '@/data/photographer';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
-  { name: 'Home', path: '/' },
-  { name: 'Portfolio', path: '/portfolio' },
-  { name: 'About', path: '/about' },
-  { name: 'Contact', path: '/contact' },
+  {
+    name: 'Products',
+    path: '/products',
+    items: [
+      { name: 'Craftrix AI', description: 'Build your app with drag and drop without coding needed', path: '/products/craftrix-ai' },
+      { name: 'Document Intelligence', description: 'Extract insights from any document', path: '/products/documents-intelligence' },
+    ],
+  },
+  {
+    name: 'Solutions',
+    path: '/solutions',
+    items: [
+      { name: 'Business Process Automation', description: 'Automate repetitive workflows with AI', path: '/solutions/business-automation' },
+      { name: 'WhatsApp Integration', description: 'LLM-powered chatbots for 24/7 customer service', path: '/solutions/whatsapp-integration' },
+      { name: 'LLM Integration', description: 'Custom AI solutions using RAG technology', path: '/solutions/llm-integration' },
+      { name: 'Low-Code Solutions', description: 'No-code automation tools for your team', path: '/solutions/low-code' },
+    ],
+  },
+  {
+    name: 'Studio',
+    path: '/studio',
+  },
 ];
 
 /**
- * Main header component with scroll-aware styling
- * Transparent on hero section, solid when scrolled
- * Mobile responsive with hamburger menu
+ * Scale.ai style header with:
+ * - Fixed position with scroll-aware background
+ * - Logo on left, nav in center, CTAs on right
+ * - Hover dropdown menus
+ * - Responsive mobile menu
  */
 export function Header() {
   const location = useLocation();
   const { isScrolled } = useScrollPosition();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
-  // Header is transparent only on homepage hero when not scrolled
-  const isTransparent = location.pathname === '/' && !isScrolled;
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Header background based on scroll
+  const isSolid = isScrolled || location.pathname !== '/';
+
+  const handleMouseEnter = (name: string) => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+    }
+    setActiveDropdown(name);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+      setActiveSubmenu(null);
+    }, 150);
+  };
+
+  const handleSubmenuMouseEnter = () => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+    }
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (dropdownTimeoutRef.current) {
+        clearTimeout(dropdownTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <motion.header
@@ -35,102 +83,289 @@ export function Header() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
-        isTransparent
-          ? 'bg-transparent'
-          : 'bg-background/90 backdrop-blur-lg border-b border-border shadow-sm'
+        'fixed left-0 right-0 top-0 z-50 transition-colors duration-300',
+        isSolid
+          ? 'bg-background/95 backdrop-blur-lg border-b border-border/50 shadow-sm'
+          : 'bg-transparent'
       )}
+      onMouseLeave={handleMouseLeave}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      {/* Main Header Container */}
+      <div className="relative transition-colors duration-200 delay-20">
+        <div className="relative items-center flex gap-2 px-6 md:px-8 justify-between grid-layout-desktop">
           {/* Logo */}
-          <Link
-            to="/"
-            className={cn(
-              'text-lg font-light tracking-widest transition-all duration-300',
-              isTransparent
-                ? 'text-white hover:text-white/80'
-                : 'text-foreground hover:text-foreground/80'
-            )}
-          >
-            <motion.span
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+          <div className="relative z-20 flex min-w-0 shrink-0 items-center self-center">
+            <Link
+              to="/"
+              className={cn(
+                'flex items-center gap-2 transition-colors duration-300',
+                isSolid ? 'text-foreground' : 'text-white'
+              )}
             >
-              {photographerInfo.name.toUpperCase()}
-            </motion.span>
-          </Link>
+              <img
+                src="/logo.png"
+                alt="Croonjob"
+                className="h-18 w-auto"
+              />
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link, index) => (
-                <motion.div
-                  key={link.path}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.1 * index }}
-                >
+          <nav
+            className="relative z-20 hidden min-w-0 flex-1 items-center justify-start gap-0.5 md:flex md:gap-1 ml-8"
+            onMouseLeave={handleMouseLeave}
+          >
+            {navLinks.map((link) => (
+              <div
+                key={link.path}
+                className="relative"
+                onMouseEnter={() => link.items && handleMouseEnter(link.name)}
+              >
+                {link.items ? (
+                  <button
+                    type="button"
+                    className={cn(
+                      'inline-flex shrink-0 items-center gap-1 border-0 bg-transparent px-1.5 py-1.5 transition-colors duration-300',
+                      'text-sm font-medium rounded-none shadow-none outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+                      activeDropdown === link.name
+                        ? isSolid ? 'text-foreground' : 'text-white'
+                        : isSolid
+                          ? 'text-foreground/80 hover:text-foreground'
+                          : 'text-white/80 hover:text-white'
+                    )}
+                    aria-expanded={activeDropdown === link.name}
+                    aria-haspopup="true"
+                  >
+                    <span>{link.name}</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={cn(
+                        'shrink-0 transition-transform duration-200',
+                        activeDropdown === link.name && 'rotate-180'
+                      )}
+                      aria-hidden="true"
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </button>
+                ) : (
                   <Link
                     to={link.path}
-                    className="relative text-lg leading-7 font-light tracking-wide text-white transition-colors duration-300 hover:text-white/80"
-                  >
-                    {link.name}
-                    {/* Active underline */}
-                    {location.pathname === link.path && (
-                      <motion.div
-                        layoutId="activeNav"
-                        className="absolute -bottom-1 left-0 right-0 h-px bg-white"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                      />
+                    className={cn(
+                      'inline-flex shrink-0 items-center gap-1 border-0 bg-transparent px-1.5 py-1.5 transition-colors duration-300',
+                      'text-sm font-medium rounded-none shadow-none outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+                      isSolid
+                        ? 'text-foreground/80 hover:text-foreground'
+                        : 'text-white/80 hover:text-white'
                     )}
+                  >
+                    <span>{link.name}</span>
+                    <ArrowRight className="size-4 shrink-0" />
                   </Link>
-                </motion.div>
-              ))}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.4 }}
-            >
-              <ThemeToggle />
-            </motion.div>
+                )}
+
+                {/* Dropdown Menu */}
+                <AnimatePresence>
+                  {activeDropdown === link.name && link.items && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.15 }}
+                      className={cn(
+                        'absolute top-full left-1/2 -translate-x-1/2 mt-2 min-w-[280px] overflow-hidden rounded-xl border shadow-lg',
+                        'bg-background/95 backdrop-blur-lg',
+                        isSolid ? 'border-border' : 'border-white/10'
+                      )}
+                      onMouseEnter={handleSubmenuMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <div className="p-2">
+                        {link.items.map((item, index) => (
+                          <Link
+                            key={item.path}
+                            to={item.path}
+                            onClick={() => {
+                              setActiveDropdown(null);
+                              setActiveSubmenu(null);
+                            }}
+                            className={cn(
+                              'flex items-start gap-3 rounded-lg px-3 py-3 transition-colors duration-150',
+                              isSolid
+                                ? 'hover:bg-muted/50'
+                                : 'hover:bg-white/10'
+                            )}
+                          >
+                            <div className="flex-1">
+                              <div className={cn(
+                                'text-sm font-medium',
+                                isSolid ? 'text-foreground' : 'text-white'
+                              )}>
+                                {item.name}
+                              </div>
+                              <div className={cn(
+                                'text-xs mt-0.5',
+                                isSolid ? 'text-muted-foreground' : 'text-white/60'
+                              )}>
+                                {item.description}
+                              </div>
+                            </div>
+                            <ChevronRight
+                              className={cn(
+                                'size-4 shrink-0 mt-0.5 transition-transform duration-150',
+                                isSolid ? 'text-muted-foreground' : 'text-white/40'
+                              )}
+                            />
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
           </nav>
 
-          {/* Mobile Menu */}
-          <div className="md:hidden flex items-center gap-2">
-            <ThemeToggle />
-            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={cn(
-                    'size-9',
-                    isTransparent && 'text-white hover:bg-white/10'
-                  )}
-                  aria-label="Open menu"
-                >
-                  <Menu className="size-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-full sm:w-80">
-                <nav className="flex flex-col gap-6 mt-8">
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="text-lg leading-7 font-light tracking-wide text-foreground hover:text-foreground/80"
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
-                </nav>
-              </SheetContent>
-            </Sheet>
+          {/* CTA Buttons */}
+          <div className="relative z-20 flex justify-end gap-2 self-center md:ml-auto md:shrink-0 md:gap-3">
+            {/* Login Button */}
+            <Link
+              to="/login"
+              className={cn(
+                'hidden shrink-0 items-center justify-center rounded-md border px-4 py-2 text-sm font-medium transition-colors duration-300',
+                'h-10 whitespace-nowrap',
+                isSolid
+                  ? 'border-border/50 bg-transparent text-foreground/80 hover:bg-muted/50 hover:text-foreground'
+                  : 'border-white/30 bg-transparent text-white/80 hover:bg-white/10 hover:text-white'
+              )}
+            >
+              Log in
+            </Link>
+
+            {/* Book Demo Button - Primary CTA */}
+            <Link
+              to="/demo"
+              className={cn(
+                'hidden shrink-0 items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-300',
+                'h-10 whitespace-nowrap',
+                isSolid
+                  ? 'bg-foreground text-background hover:bg-foreground/90'
+                  : 'bg-white text-foreground hover:bg-white/90'
+              )}
+            >
+              Book demo
+            </Link>
+
+            {/* Mobile CTA */}
+            <Link
+              to="/demo"
+              className={cn(
+                'shrink-0 flex md:hidden items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-300 h-10',
+                isSolid
+                  ? 'bg-foreground text-background'
+                  : 'bg-white text-foreground'
+              )}
+            >
+              Book demo
+            </Link>
+
+            {/* Mobile Menu Toggle */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={cn(
+                'inline-flex size-10 shrink-0 items-center justify-center rounded-lg transition-colors duration-200 md:hidden',
+                isSolid
+                  ? 'bg-muted/50 text-foreground hover:bg-muted'
+                  : 'bg-white/10 text-white hover:bg-white/20'
+              )}
+              aria-expanded={mobileMenuOpen}
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            >
+              {mobileMenuOpen ? (
+                <X className="size-5 shrink-0" />
+              ) : (
+                <Menu className="size-5 shrink-0" />
+              )}
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className={cn(
+              'md:hidden overflow-hidden border-t',
+              isSolid
+                ? 'bg-background border-border'
+                : 'bg-foreground/95 border-white/10'
+            )}
+          >
+            <nav className="flex flex-col gap-1 p-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(
+                    'flex items-center justify-between px-3 py-3 text-base font-medium rounded-lg transition-colors',
+                    isSolid
+                      ? 'text-foreground/80 hover:text-foreground hover:bg-muted/50'
+                      : 'text-white/80 hover:text-white hover:bg-white/10'
+                  )}
+                >
+                  <span>{link.name}</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </Link>
+              ))}
+
+              {/* Mobile Divider */}
+              <div className={cn('my-2 h-px', isSolid ? 'bg-border' : 'bg-white/20')} />
+
+              {/* Mobile Login */}
+              <Link
+                to="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  'flex items-center justify-center px-3 py-3 text-base font-medium rounded-lg transition-colors',
+                  isSolid
+                    ? 'text-foreground/80 hover:text-foreground hover:bg-muted/50 border border-border'
+                    : 'text-white/80 hover:text-white hover:bg-white/10 border border-white/30'
+                )}
+              >
+                Log in
+              </Link>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }
