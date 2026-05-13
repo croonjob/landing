@@ -19,6 +19,11 @@ const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const CustomerService = lazy(() => import("./pages/solutions/CustomerService"));
+const BusinessAutomation = lazy(() => import("./pages/solutions/BusinessAutomation"));
+const DocumentIntelligence = lazy(() => import("./pages/solutions/DocumentIntelligence"));
+const DataLakehouse = lazy(() => import("./pages/solutions/DataLakehouse"));
+const MarketPredictiveAnalytics = lazy(() => import("./pages/solutions/MarketPredictiveAnalytics"));
 
 const queryClient = new QueryClient();
 
@@ -65,6 +70,46 @@ function AnimatedRoutes() {
           element={
             <PageTransition>
               <Contact />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/solutions/customer-service"
+          element={
+            <PageTransition>
+              <CustomerService />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/solutions/business-automation"
+          element={
+            <PageTransition>
+              <BusinessAutomation />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/solutions/document-intelligence"
+          element={
+            <PageTransition>
+              <DocumentIntelligence />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/solutions/data-lakehouse"
+          element={
+            <PageTransition>
+              <DataLakehouse />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/solutions/market-predictive-analytics"
+          element={
+            <PageTransition>
+              <MarketPredictiveAnalytics />
             </PageTransition>
           }
         />

@@ -18,10 +18,11 @@ const navLinks = [
     name: 'Solutions',
     path: '/solutions',
     items: [
-      { name: 'Business Process Automation', description: 'Automate repetitive workflows with AI', path: '/solutions/business-automation' },
-      { name: 'WhatsApp Integration', description: 'LLM-powered chatbots for 24/7 customer service', path: '/solutions/whatsapp-integration' },
-      { name: 'LLM Integration', description: 'Custom AI solutions using RAG technology', path: '/solutions/llm-integration' },
-      { name: 'Low-Code Solutions', description: 'No-code automation tools for your team', path: '/solutions/low-code' },
+      { name: 'Customer Service', description: 'AI-powered chatbots for 24/7 customer support', path: '/solutions/customer-service' },
+      { name: 'Business Automation', description: 'Automate repetitive workflows with AI', path: '/solutions/business-automation' },
+      { name: 'Document Intelligence', description: 'Extract insights from any document', path: '/solutions/document-intelligence' },
+      { name: 'Data Lakehouse', description: 'Centralize and analyze your business data', path: '/solutions/data-lakehouse' },
+      { name: 'Market Predictive Analytics', description: 'AI-powered financial forecasting', path: '/solutions/market-predictive-analytics' },
     ],
   },
   {

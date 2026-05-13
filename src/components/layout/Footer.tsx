@@ -2,24 +2,22 @@ import { Link } from 'react-router-dom';
 
 const footerLinks = {
   products: [
-    { name: 'Craftrix AI', path: '/products/craftrix-ai' },
-    { name: 'Document Intelligence', path: '/products/documents-intelligence' },
+    { name: 'Craftrix AI', path: '/products/craftrix-ai' }
   ],
   solutions: [
-    { name: 'Business Automation', path: '/solutions/business-automation' },
-    { name: 'WhatsApp Integration', path: '/solutions/whatsapp-integration' },
-    { name: 'LLM Integration', path: '/solutions/llm-integration' },
-    { name: 'Low-Code Solutions', path: '/solutions/low-code' },
+    { name: 'Customer Service', path: '/solutions/customer-service' },
+    { name: 'Business Intelligence', path: '/solutions/business-automation' },
+    { name: 'Document Intelligence', path: '/solutions/document-intelligence' },
+    { name: 'Data Lakehouse', path: '/solutions/data-lakehouse' },
+    { name: 'Market Intelligence', path: '/solutions/market-predictive-analytics' },
+
   ],
   company: [
     { name: 'About', path: '/about' },
-    { name: 'Careers', path: '/careers' },
     { name: 'Contact', path: '/contacts' },
   ],
   resources: [
-    { name: 'Blog', path: '/blog' },
-    { name: 'Documentation', path: '/docs' },
-    { name: 'Contact Us', path: '/contacts' },
+    { name: 'Blog', path: '/blog' }
   ],
 };
 

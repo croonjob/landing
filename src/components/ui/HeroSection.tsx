@@ -5,13 +5,8 @@ import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const keywords = [
-  { text: 'Automation', color: 'text-amber-500' },
-  { text: 'WhatsApp', color: 'text-green-500' },
-  { text: 'Telegram', color: 'text-slate-500' },
-  { text: 'LLM', color: 'text-blue-500' },
-  { text: 'RAG', color: 'text-purple-500' },
-  { text: 'Low-Code', color: 'text-orange-500' },
-  { text: 'Analytics', color: 'text-teal-500' },
+  { text: 'AI/ML', color: 'text-purple-500' },
+  { text: 'Data Center', color: 'text-purple-500' },
 ];
 
 export function HeroSection() {
@@ -64,7 +59,7 @@ export function HeroSection() {
 
           {/* Subtitle */}
           <p className="text-white/80 text-base md:text-lg font-light leading-relaxed text-left max-w-2xl mt-6">
-            Transform your operations with intelligent automation, LLM-powered chatbots, and no-code solutions
+            Transform your operations with intelligent automation, LLM-powered chatbots, and custom Web Application
           </p>
 
           {/* CTA Button */}

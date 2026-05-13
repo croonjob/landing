@@ -1,6 +1,7 @@
 import type { PhotographerInfo } from '@/types';
 
 export const photographerInfo: PhotographerInfo = {
+  name: "Croonjob",
   tagline: 'AI & LLM Business Automation Expert',
   heroIntroduction: 'Automate your business with AI, LLM, and RAG. Profit & loss prediction, WhatsApp messaging automation, low-code/no-code solutions.',
   biography: `CROONJOB is an AI-powered business automation consultant helping companies optimize operations with LLM and RAG (Retrieval-Augmented Generation) technologies.
