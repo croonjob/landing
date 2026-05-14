@@ -9,6 +9,7 @@ import { SkipToContent } from "@/components/ui/SkipToContent";
 import { LoadingFallback } from "@/components/ui/LoadingFallback";
 import { PageTransition } from "@/components/ui/PageTransition";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
 import { AnimatePresence } from "framer-motion";
 import { lazy, Suspense } from "react";
 
@@ -140,6 +141,7 @@ const App = () => (
                 <AnimatedRoutes />
               </Suspense>
             </Layout>
+            <WhatsAppFloat />
           </BrowserRouter>
         </TooltipProvider>
       </ThemeProvider>
